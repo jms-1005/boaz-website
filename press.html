@@ -45,14 +45,33 @@
 
     /* HERO */
     .hero {
-      background: linear-gradient(135deg, #1a3a2a 0%, #2d5c3f 60%, #3a7050 100%);
-      padding: 72px 40px 60px;
+      background: #1a3a2a;
+      padding: 0;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-bg-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 72px 40px 60px;
+      max-width: 700px;
     }
     .hero .eyebrow {
       font-family: 'Helvetica Neue', Arial, sans-serif;
       font-size: 0.75rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: #a8c89a;
       margin-bottom: 16px;
@@ -64,11 +83,11 @@
       margin-bottom: 16px;
     }
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #c8e0c0;
-      max-width: 560px;
+      max-width: 520px;
       margin: 0 auto 32px;
-      line-height: 1.6;
+      line-height: 1.65;
       font-style: italic;
     }
     .hero .cta {
@@ -85,6 +104,33 @@
       border-radius: 2px;
     }
     .hero .cta:hover { background: #f0e0b0; }
+    /* Featured-in strip */
+    .featured-strip {
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    .featured-strip .fi-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .featured-strip .fi-outlet {
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+      padding: 0 16px;
+      border-left: 1px solid rgba(255,255,255,0.15);
+    }
 
     /* CONTAINER */
     .container {
@@ -323,10 +369,77 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="eyebrow">Media &amp; Press</div>
-    <h1>The Boaz Club<br>in the News</h1>
-    <p>Canada's first shared greenhouse network where anyone can rent a plot and grow their own food, year-round.</p>
-    <a class="cta" href="mailto:press@boaz.club">Press Enquiries</a>
+    <!-- SVG background: press/journalism theme with columns and quote marks -->
+    <svg class="hero-bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#2d5c3f" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#0e2318" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="vign" cx="50%" cy="50%" r="70%">
+          <stop offset="30%" stop-color="rgba(0,0,0,0)"/>
+          <stop offset="100%" stop-color="rgba(0,0,0,0.55)"/>
+        </radialGradient>
+      </defs>
+      <!-- Base -->
+      <rect width="1200" height="380" fill="#0e2318"/>
+      <!-- Subtle column lines -->
+      <line x1="200" y1="0" x2="200" y2="380" stroke="#1a3a2a" stroke-width="1" opacity="0.6"/>
+      <line x1="400" y1="0" x2="400" y2="380" stroke="#1a3a2a" stroke-width="1" opacity="0.6"/>
+      <line x1="600" y1="0" x2="600" y2="380" stroke="#1a3a2a" stroke-width="1" opacity="0.6"/>
+      <line x1="800" y1="0" x2="800" y2="380" stroke="#1a3a2a" stroke-width="1" opacity="0.6"/>
+      <line x1="1000" y1="0" x2="1000" y2="380" stroke="#1a3a2a" stroke-width="1" opacity="0.6"/>
+      <!-- Faint horizontal rule lines (like newsprint) -->
+      <line x1="0" y1="80" x2="1200" y2="80" stroke="#1a3a2a" stroke-width="0.7" opacity="0.5"/>
+      <line x1="0" y1="160" x2="1200" y2="160" stroke="#1a3a2a" stroke-width="0.7" opacity="0.5"/>
+      <line x1="0" y1="240" x2="1200" y2="240" stroke="#1a3a2a" stroke-width="0.7" opacity="0.5"/>
+      <line x1="0" y1="320" x2="1200" y2="320" stroke="#1a3a2a" stroke-width="0.7" opacity="0.5"/>
+      <!-- Large decorative quotation mark left -->
+      <text x="40" y="280" font-family="Georgia,serif" font-size="280" fill="#1a3a2a" opacity="0.55">"</text>
+      <!-- Large decorative quotation mark right -->
+      <text x="940" y="320" font-family="Georgia,serif" font-size="280" fill="#1a3a2a" opacity="0.4">"</text>
+      <!-- Floating headline cards left -->
+      <rect x="30" y="30" width="148" height="68" rx="4" fill="#1a3a2a" opacity="0.6"/>
+      <rect x="38" y="40" width="80" height="5" rx="2" fill="#52B788" opacity="0.5"/>
+      <rect x="38" y="52" width="132" height="4" rx="2" fill="#e8d5a3" opacity="0.25"/>
+      <rect x="38" y="62" width="110" height="4" rx="2" fill="#e8d5a3" opacity="0.2"/>
+      <rect x="38" y="72" width="124" height="4" rx="2" fill="#e8d5a3" opacity="0.15"/>
+      <rect x="38" y="82" width="96" height="4" rx="2" fill="#e8d5a3" opacity="0.1"/>
+      <!-- Floating headline card right -->
+      <rect x="1022" y="48" width="148" height="68" rx="4" fill="#1a3a2a" opacity="0.6"/>
+      <rect x="1030" y="58" width="72" height="5" rx="2" fill="#52B788" opacity="0.5"/>
+      <rect x="1030" y="70" width="132" height="4" rx="2" fill="#e8d5a3" opacity="0.25"/>
+      <rect x="1030" y="80" width="105" height="4" rx="2" fill="#e8d5a3" opacity="0.2"/>
+      <rect x="1030" y="90" width="120" height="4" rx="2" fill="#e8d5a3" opacity="0.15"/>
+      <rect x="1030" y="100" width="88" height="4" rx="2" fill="#e8d5a3" opacity="0.1"/>
+      <!-- Floating headline card bottom-left -->
+      <rect x="50" y="280" width="130" height="58" rx="4" fill="#1a3a2a" opacity="0.5"/>
+      <rect x="58" y="290" width="60" height="4" rx="2" fill="#F4C430" opacity="0.4"/>
+      <rect x="58" y="300" width="114" height="3" rx="2" fill="#e8d5a3" opacity="0.2"/>
+      <rect x="58" y="309" width="100" height="3" rx="2" fill="#e8d5a3" opacity="0.15"/>
+      <rect x="58" y="318" width="80" height="3" rx="2" fill="#e8d5a3" opacity="0.1"/>
+      <!-- Floating headline card bottom-right -->
+      <rect x="1020" y="274" width="140" height="62" rx="4" fill="#1a3a2a" opacity="0.5"/>
+      <rect x="1028" y="284" width="68" height="4" rx="2" fill="#F4C430" opacity="0.4"/>
+      <rect x="1028" y="294" width="124" height="3" rx="2" fill="#e8d5a3" opacity="0.2"/>
+      <rect x="1028" y="303" width="108" height="3" rx="2" fill="#e8d5a3" opacity="0.15"/>
+      <rect x="1028" y="312" width="90" height="3" rx="2" fill="#e8d5a3" opacity="0.1"/>
+      <!-- Centre glow -->
+      <rect width="1200" height="380" fill="url(#glow)"/>
+      <!-- Vignette -->
+      <rect width="1200" height="380" fill="url(#vign)"/>
+    </svg>
+    <div class="hero-content">
+      <div class="eyebrow">Media &amp; Press</div>
+      <h1>The Boaz Club<br>in the News</h1>
+      <p>Canada's first shared greenhouse network where anyone can rent a plot and grow their own food, year-round.</p>
+      <a class="cta" href="mailto:press@boaz.club">Press Enquiries</a>
+    </div>
+  </div>
+  <!-- FEATURED IN STRIP -->
+  <div class="featured-strip">
+    <span class="fi-label">As featured in</span>
+    <span class="fi-outlet">Fraser Valley Today</span>
   </div>
 
   <div class="container">
