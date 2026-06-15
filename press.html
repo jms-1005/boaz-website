@@ -156,11 +156,25 @@
       background: #fff;
       border: 1px solid #ddd8cc;
       border-left: 5px solid #2d5c3f;
-      padding: 28px 32px;
+      padding: 0;
       margin-bottom: 24px;
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      overflow: hidden;
+    }
+    .news-card .news-thumb {
+      width: 220px;
+      min-width: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .news-card .news-body {
       display: flex;
       gap: 24px;
       align-items: flex-start;
+      padding: 28px 32px;
+      flex: 1;
     }
     .news-card .outlet-badge {
       min-width: 120px;
@@ -349,7 +363,9 @@
     @media (max-width: 680px) {
       .hero h1 { font-size: 2rem; }
       .facts-grid { grid-template-columns: 1fr 1fr; }
-      .news-card { flex-direction: column; gap: 12px; }
+      .news-card { flex-direction: column; gap: 0; }
+      .news-card .news-thumb { width: 100%; min-width: unset; height: 180px; }
+      .news-card .news-body { flex-direction: column; gap: 12px; }
       .contact-bar { flex-direction: column; gap: 20px; text-align: center; }
       header { flex-direction: column; gap: 16px; }
     }
@@ -448,14 +464,19 @@
     <div class="section-label">In the News</div>
 
     <div class="news-card">
-      <div class="outlet-badge">
-        <div class="outlet-name">Fraser Valley<br>Today</div>
-        <div class="outlet-date">June 14, 2026</div>
-      </div>
-      <div class="news-content">
-        <h3>Chilliwack resident aims to launch 'Airbnb for farming' in Fraser Valley</h3>
-        <p>A Chilliwack local is looking to help families and restaurants save on rising produce costs with some help from Fraser Valley farmers. Named after the biblical farm owner from Bethlehem, The Boaz Club would involve building a shared greenhouse structure on private land where members can rent individual 3×3 plots to grow their own food.</p>
-        <a href="https://fraservalleytoday.ca/2026/06/14/chilliwack-resident-aims-to-launch-airbnb-for-farming-in-fraser-valley/" target="_blank">Read Full Article →</a>
+      <img class="news-thumb"
+           src="https://media-cdn.socastsrm.com/wordpress/wp-content/blogs.dir/3024/files/2026/06/87e6573f-0356-43ad-9f0e-230081093567.jpg"
+           alt="Fraser Valley agriculture — Fraser Valley Today">
+      <div class="news-body">
+        <div class="outlet-badge">
+          <div class="outlet-name">Fraser Valley<br>Today</div>
+          <div class="outlet-date">June 14, 2026</div>
+        </div>
+        <div class="news-content">
+          <h3>Chilliwack resident aims to launch 'Airbnb for farming' in Fraser Valley</h3>
+          <p>A Chilliwack local is looking to help families and restaurants save on rising produce costs with some help from Fraser Valley farmers. Named after the biblical farm owner from Bethlehem, The Boaz Club would involve building a shared greenhouse structure on private land where members can rent individual 3×3 plots to grow their own food.</p>
+          <a href="https://fraservalleytoday.ca/2026/06/14/chilliwack-resident-aims-to-launch-airbnb-for-farming-in-fraser-valley/" target="_blank">Read Full Article →</a>
+        </div>
       </div>
     </div>
 
