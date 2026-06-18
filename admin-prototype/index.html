@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Boaz Club Admin">
+<meta name="theme-color" content="#1B4332">
+<title>Boaz Club Admin</title>
+<style>
+  :root{
+    --forest:#1B4332; --forest2:#2D5A43; --moss:#52B788; --moss-soft:#D6F0E2;
+    --gold:#E9C46A; --gold-deep:#D9A93E; --cream:#F8FAF7; --ink:#16241E;
+    --muted:#6B7F76; --line:#E3ECE7; --white:#FFFFFF; --danger:#D9534F;
+    --warn:#E08A2B; --warn-soft:#FBE7CC; --shadow:0 10px 30px rgba(20,40,30,.12);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  h2.title{font-size:21px; margin:4px 0 2px; color:var(--forest);}
+  .sub{color:var(--muted); font-size:13px; margin:0 0 16px;}
+  .card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:16px; box-shadow:var(--shadow); margin-bottom:14px;}
+  .pill{display:inline-block; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px;}
+  .pill.green{background:var(--moss-soft); color:#1c6e4a;}
+  .pill.gold{background:#FBEFCB; color:#8a6a12;}
+  .pill.red{background:#FBE3E2; color:#a23330;}
+  .btn{display:block; width:100%; text-align:center; background:var(--forest); color:#fff; border:none;
+    padding:14px; border-radius:14px; font-size:15px; font-weight:700; cursor:pointer; transition:.15s; margin-top:6px;}
+  .btn:hover{background:var(--forest2);}
+  .btn.gold{background:var(--gold); color:#3a2d05;} .btn.gold:hover{background:var(--gold-deep);}
+  .btn.ghost{background:transparent; color:var(--forest); border:1.5px solid var(--line);}
+  .btn.ghost:hover{background:#f0f6f2;}
+  .row{display:flex; align-items:center; gap:12px;}
+  .spread{display:flex; align-items:center; justify-content:space-between;}
+  .muted{color:var(--muted); font-size:13px;}
+  .big{font-size:28px; font-weight:800; color:var(--forest);}
+  .link{color:var(--moss); font-weight:700; cursor:pointer; font-size:13px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .ico{width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex:none;}
+  .emoji{font-size:20px; line-height:1;}
+  .brandhead{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .logo{display:flex; align-items:center; gap:9px; font-weight:800; color:var(--forest); font-size:16px;}
+  .logo .mark{width:30px; height:30px; border-radius:9px; background:var(--forest); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:16px; flex:none;}
+  .avatar{width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--moss),var(--forest)); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; cursor:pointer; flex:none;}
+  .plothero{border-radius:18px; overflow:hidden; position:relative; height:150px; margin-bottom:14px;
+    background:linear-gradient(135deg,#2f6a4a,#173a2a); color:#fff; padding:16px; display:flex; flex-direction:column; justify-content:flex-end;}
+  .plothero::after{content:"🌱🥬🍅🌿"; position:absolute; top:10px; right:12px; font-size:30px; opacity:.5; letter-spacing:4px;}
+  .plothero h3{margin:0; font-size:18px;} .plothero .muted2{color:#cdeede; font-size:12px;}
+  .lrow{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); cursor:pointer;}
+  .lrow:last-child{border-bottom:none;}
+  .lrow .meta{flex:1;} .lrow .meta b{display:block; font-size:14px; color:var(--ink);}
+  .lrow .meta span{font-size:12px; color:var(--muted);}
+  .bar{height:8px; background:var(--line); border-radius:99px; overflow:hidden;}
+  .bar > i{display:block; height:100%; background:linear-gradient(90deg,var(--moss),var(--forest));}
+  .backlink{color:var(--forest); font-weight:700; font-size:14px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; margin-bottom:6px;}
+  .seg{display:flex; background:#eef4f0; border-radius:12px; padding:4px; margin-bottom:14px;}
+  .seg span{flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; color:var(--muted); border-radius:9px; cursor:pointer;}
+  .seg span.on{background:#fff; color:var(--forest); box-shadow:0 1px 4px rgba(0,0,0,.08);}
+  .stat{background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px;}
+  .stat .n{font-size:20px; font-weight:800; color:var(--forest);} .stat .l{font-size:11px; color:var(--muted);}
+  .hint{text-align:center; color:#9fb3a9; font-size:11px; margin-top:16px;}
+
+  /* ===== AR live stream ===== */
+  .arstage{position:relative; height:240px; border-radius:18px; overflow:hidden; margin-bottom:12px;
+    background:#0c1c14; box-shadow:inset 0 0 60px rgba(0,0,0,.6);}
+  .arscene{position:absolute; inset:0; display:none;}
+  .arscene.on{display:block;}
+  .arscene .sky{position:absolute; inset:0;}
+  .arscene .soil{position:absolute; left:0; right:0; bottom:0; height:46px; background:linear-gradient(#5a3b22,#3a2412);}
+  .plantbig{position:absolute; font-size:120px; line-height:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));}
+  .plantmid{position:absolute; font-size:60px; line-height:1; filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));}
+  .plantsm{position:absolute; font-size:34px; line-height:1; filter:drop-shadow(0 3px 6px rgba(0,0,0,.5));}
+  .argrid{position:absolute; inset:0; background-image:linear-gradient(rgba(82,183,136,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(82,183,136,.10) 1px,transparent 1px); background-size:26px 26px;}
+  .corner{position:absolute; width:18px; height:18px; border:2px solid var(--moss);}
+  .corner.tl{top:10px; left:10px; border-right:none; border-bottom:none;}
+  .corner.tr{top:10px; right:10px; border-left:none; border-bottom:none;}
+  .corner.bl{bottom:10px; left:10px; border-right:none; border-top:none;}
+  .corner.br{bottom:10px; right:10px; border-left:none; border-top:none;}
+  .scanline{position:absolute; left:0; right:0; height:42px; pointer-events:none;
+    background:linear-gradient(rgba(82,183,136,0),rgba(82,183,136,.28),rgba(82,183,136,0));
+    animation:scan 3.4s linear infinite;}
+  @keyframes scan{0%{top:-42px;} 100%{top:240px;}}
+  .artag{position:absolute; display:flex; align-items:center; gap:6px; z-index:5;}
+  .artag .dot{width:10px; height:10px; border-radius:50%; background:var(--moss); box-shadow:0 0 0 4px rgba(82,183,136,.3); animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(82,183,136,.35);} 50%{box-shadow:0 0 0 7px rgba(82,183,136,.12);}}
+  .artag .lab{background:rgba(8,22,15,.82); border:1px solid var(--moss); border-radius:8px; padding:4px 8px; color:#eafff3; backdrop-filter:blur(3px);}
+  .artag .lab b{display:block; font-size:11px; line-height:1.2;}
+  .artag .lab i{font-style:normal; font-size:9.5px; color:var(--gold);}
+  .arbox{position:absolute; border:1.5px dashed rgba(233,196,106,.85); border-radius:8px; z-index:3;}
+  .hud-live{position:absolute; top:12px; left:12px; display:flex; gap:8px; align-items:center; z-index:8;}
+  .reclive{background:rgba(217,83,79,.92); color:#fff; font-size:10px; font-weight:800; padding:3px 8px; border-radius:6px;}
+  .camlabel{background:rgba(8,22,15,.7); color:#cdeede; font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px;}
+  .hud-meters{position:absolute; top:12px; right:12px; display:flex; gap:10px; z-index:8;}
+  .meter{display:flex; flex-direction:column; align-items:center; gap:4px;}
+  .mbar{width:10px; height:120px; background:rgba(255,255,255,.16); border-radius:6px; overflow:hidden; display:flex; align-items:flex-end;}
+  .mfill{display:block; width:100%; border-radius:6px; transition:height .4s ease;}
+  .mfill.temp{background:linear-gradient(#7ED957,#3FA34D);}
+  .mfill.hum{background:linear-gradient(#F4B860,#E08A2B);}
+  .mlabel{text-align:center;} .mlabel b{display:block; font-size:11px; color:#fff;} .mlabel span{font-size:8px; color:#bcd9cb;}
+  .envchips{display:flex; gap:8px; margin-bottom:12px;}
+  .envchip{flex:1; border-radius:12px; padding:9px 12px; display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700;}
+  .envchip.tempc{background:var(--moss-soft); color:#1c6e4a;}
+  .envchip.humc{background:var(--warn-soft); color:#9a5a12;}
+  .envchip small{display:block; font-weight:600; opacity:.8; font-size:10px;}
+
+  .tabbar{position:absolute; bottom:0; left:0; right:0; height:74px; background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px); border-top:1px solid var(--line); display:flex; z-index:45; padding-bottom:8px;}
+  .tab{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    font-size:10px; color:var(--muted); cursor:pointer; font-weight:600;}
+  .tab .t-ic{font-size:19px;}
+  .tab.active{color:var(--forest);}
+  .tabbar.hidden{display:none;}
+
+    html,body{margin:0; padding:0; height:100%;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background:var(--cream); color:var(--ink); overflow:hidden;}
+    .app{position:fixed; inset:0; background:var(--cream); overflow:hidden;}
+    .screens{position:absolute; inset:0;}
+    .screen{position:absolute; inset:0; display:none; overflow-y:auto; -webkit-overflow-scrolling:touch;
+      padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 24px);
+      animation:fade .25s ease;}
+    .screen.active{display:block;}
+    .screen::-webkit-scrollbar{width:0;}
+    @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+    .toast{position:fixed; bottom:calc(env(safe-area-inset-bottom) + 28px); left:50%;
+      transform:translateX(-50%) translateY(20px); background:var(--forest); color:#fff; padding:11px 18px; border-radius:12px;
+      font-size:13px; font-weight:600; opacity:0; transition:.3s; z-index:60; pointer-events:none; box-shadow:var(--shadow); max-width:80%; text-align:center;}
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  </style></head>
+<body>
+<div class="app">
+  <div class="screens"><section class="screen active" id="gha">
+  <div class="brandhead"><div class="logo"><span class="mark">🛠️</span> Club Admin</div>
+    <span class="pill green">All systems ok</span></div>
+  <h2 class="title">Greenhouse health</h2>
+  <p class="sub">Chilliwack North · 48 plots · 41 active</p>
+  <div class="grid2">
+    <div class="stat"><div class="n">22°C</div><div class="l">Temperature</div></div>
+    <div class="stat"><div class="n">64%</div><div class="l">Humidity</div></div>
+    <div class="stat"><div class="n">100%</div><div class="l">Water supply</div></div>
+    <div class="stat"><div class="n">OK</div><div class="l">Power & light</div></div>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="spread"><b>Active alerts</b><span class="pill gold">2 open</span></div>
+    <div class="lrow"><span class="ico" style="background:#FBEFCB;">⚠️</span>
+      <div class="meta"><b>Aphids on Zone C</b><span>Plot B-09 · medium</span></div><span class="link" onclick="toast('Assigned to field team')">Assign</span></div>
+    <div class="lrow"><span class="ico" style="background:#FBE3E2;">🔧</span>
+      <div class="meta"><b>Fan 3 vibration high</b><span>Zone A · check</span></div><span class="link" onclick="toast('Maintenance scheduled')">Fix</span></div>
+  </div>
+  <div class="card">
+    <b>Member requests</b>
+    <div class="lrow"><span class="ico" style="background:var(--moss-soft);">🧑‍🌾</span>
+      <div class="meta"><b>Tend plot A-22</b><span>Requested today</span></div><span class="pill green">New</span></div>
+    <div class="lrow"><span class="ico" style="background:#EAF6EE;">🌱</span>
+      <div class="meta"><b>Custom crop: wasabi</b><span>Needs regulatory check</span></div><span class="pill gold">Review</span></div>
+  </div>
+</section></div>
+  
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+  function go(id){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.classList.add('active'); el.scrollTop = 0;
+    document.querySelectorAll('.tab').forEach(function(t){
+      t.classList.toggle('active', t.getAttribute('data-tab')===id);
+    });
+    var tb = document.getElementById('tabbar');
+    if(tb){ var hide = (id==='login' || id==='gha' || id==='gho'); tb.classList.toggle('hidden', hide); }
+  }
+  function setRole(role){
+    document.querySelectorAll('.rolebtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-role')===role); });
+    if(role==='member'){ go('home'); } else if(role==='gha'){ go('gha'); } else if(role==='gho'){ go('gho'); }
+  }
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast'); if(!t) return;
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1900);
+  }
+  function segPick(el){
+    var sibs = el.parentNode.children;
+    for(var i=0;i<sibs.length;i++){ sibs[i].classList.remove('on'); }
+    el.classList.add('on');
+  }
+  function unlock(circle){
+    if(!circle) return; circle.textContent = '🔒'; toast('Unlocked — welcome in 🌿');
+    setTimeout(function(){ circle.textContent = '🔓'; }, 1800);
+  }
+  function switchGH(){
+    var names = ['Chilliwack North','Vancouver East','Surrey Central','All greenhouses'];
+    var revs = ['$8,420','$6,910','$5,330','$20,660'];
+    var cur = document.getElementById('ghName').textContent;
+    var idx = (names.indexOf(cur)+1) % names.length;
+    document.getElementById('ghName').textContent = names[idx];
+    document.getElementById('ghRev').textContent = revs[idx];
+    toast('Switched to ' + names[idx]);
+  }
+  var ANGLES = [
+    {cam:'Cam 1 · Top',  temp:22, tf:62, hum:71, hf:71, hs:'Slightly high', ai:'Tomato cluster ripe and healthy. Canopy coverage 78%. No pests on overhead scan. Suggested action: harvest within 3 days.'},
+    {cam:'Cam 2 · Side', temp:22, tf:62, hum:70, hf:70, hs:'Slightly high', ai:'Strong stems and 14 fruit set, growth +3cm this week. Side scan clear of disease.'},
+    {cam:'Cam 3 · Macro',temp:23, tf:68, hum:73, hf:73, hs:'Slightly high', ai:'Close-up ripeness 92 percent, no blemishes detected. Best picked within 2 days.'},
+    {cam:'Cam 4 · Wide', temp:21, tf:58, hum:70, hf:70, hs:'Slightly high', ai:'Whole-plot scan nominal across all zones. Next harvest: tomatoes.'}
+  ];
+  function switchAngle(n, el){
+    document.querySelectorAll('.arscene').forEach(function(s){ s.classList.toggle('on', s.getAttribute('data-a')==String(n)); });
+    if(el){ var sibs=el.parentNode.children; for(var i=0;i<sibs.length;i++){ sibs[i].classList.remove('on'); } el.classList.add('on'); }
+    var a = ANGLES[n];
+    var set=function(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; };
+    var fill=function(id,v){ var e=document.getElementById(id); if(e) e.style.height=v+'%'; };
+    set('camlabel', a.cam);
+    set('tempVal', a.temp+'°'); set('tempChip', a.temp+'°C');
+    set('humVal', a.hum+'%'); set('humChip', a.hum+'%'); set('humState', a.hs);
+    fill('tempFill', a.tf); fill('humFill', a.hf);
+    set('aiInsight', a.ai);
+  }
+
+  // start on first screen
+  go('gha');
+</script>
+</body></html>

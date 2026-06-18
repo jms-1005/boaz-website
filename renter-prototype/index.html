@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Boaz Club">
+<meta name="theme-color" content="#1B4332">
+<title>Boaz Club</title>
+<style>
+  :root{
+    --forest:#1B4332; --forest2:#2D5A43; --moss:#52B788; --moss-soft:#D6F0E2;
+    --gold:#E9C46A; --gold-deep:#D9A93E; --cream:#F8FAF7; --ink:#16241E;
+    --muted:#6B7F76; --line:#E3ECE7; --white:#FFFFFF; --danger:#D9534F;
+    --warn:#E08A2B; --warn-soft:#FBE7CC; --shadow:0 10px 30px rgba(20,40,30,.12);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  h2.title{font-size:21px; margin:4px 0 2px; color:var(--forest);}
+  .sub{color:var(--muted); font-size:13px; margin:0 0 16px;}
+  .card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:16px; box-shadow:var(--shadow); margin-bottom:14px;}
+  .pill{display:inline-block; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px;}
+  .pill.green{background:var(--moss-soft); color:#1c6e4a;}
+  .pill.gold{background:#FBEFCB; color:#8a6a12;}
+  .pill.red{background:#FBE3E2; color:#a23330;}
+  .btn{display:block; width:100%; text-align:center; background:var(--forest); color:#fff; border:none;
+    padding:14px; border-radius:14px; font-size:15px; font-weight:700; cursor:pointer; transition:.15s; margin-top:6px;}
+  .btn:hover{background:var(--forest2);}
+  .btn.gold{background:var(--gold); color:#3a2d05;} .btn.gold:hover{background:var(--gold-deep);}
+  .btn.ghost{background:transparent; color:var(--forest); border:1.5px solid var(--line);}
+  .btn.ghost:hover{background:#f0f6f2;}
+  .row{display:flex; align-items:center; gap:12px;}
+  .spread{display:flex; align-items:center; justify-content:space-between;}
+  .muted{color:var(--muted); font-size:13px;}
+  .big{font-size:28px; font-weight:800; color:var(--forest);}
+  .link{color:var(--moss); font-weight:700; cursor:pointer; font-size:13px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .ico{width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex:none;}
+  .emoji{font-size:20px; line-height:1;}
+  .brandhead{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .logo{display:flex; align-items:center; gap:9px; font-weight:800; color:var(--forest); font-size:16px;}
+  .logo .mark{width:30px; height:30px; border-radius:9px; background:var(--forest); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:16px; flex:none;}
+  .avatar{width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--moss),var(--forest)); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; cursor:pointer; flex:none;}
+  .plothero{border-radius:18px; overflow:hidden; position:relative; height:150px; margin-bottom:14px;
+    background:linear-gradient(135deg,#2f6a4a,#173a2a); color:#fff; padding:16px; display:flex; flex-direction:column; justify-content:flex-end;}
+  .plothero::after{content:"🌱🥬🍅🌿"; position:absolute; top:10px; right:12px; font-size:30px; opacity:.5; letter-spacing:4px;}
+  .plothero h3{margin:0; font-size:18px;} .plothero .muted2{color:#cdeede; font-size:12px;}
+  .lrow{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); cursor:pointer;}
+  .lrow:last-child{border-bottom:none;}
+  .lrow .meta{flex:1;} .lrow .meta b{display:block; font-size:14px; color:var(--ink);}
+  .lrow .meta span{font-size:12px; color:var(--muted);}
+  .bar{height:8px; background:var(--line); border-radius:99px; overflow:hidden;}
+  .bar > i{display:block; height:100%; background:linear-gradient(90deg,var(--moss),var(--forest));}
+  .backlink{color:var(--forest); font-weight:700; font-size:14px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; margin-bottom:6px;}
+  .seg{display:flex; background:#eef4f0; border-radius:12px; padding:4px; margin-bottom:14px;}
+  .seg span{flex:1; text-align:center; padding:8px; font-size:12px; font-weight:700; color:var(--muted); border-radius:9px; cursor:pointer;}
+  .seg span.on{background:#fff; color:var(--forest); box-shadow:0 1px 4px rgba(0,0,0,.08);}
+  .stat{background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px;}
+  .stat .n{font-size:20px; font-weight:800; color:var(--forest);} .stat .l{font-size:11px; color:var(--muted);}
+  .hint{text-align:center; color:#9fb3a9; font-size:11px; margin-top:16px;}
+
+  /* ===== AR live stream ===== */
+  .arstage{position:relative; height:240px; border-radius:18px; overflow:hidden; margin-bottom:12px;
+    background:#0c1c14; box-shadow:inset 0 0 60px rgba(0,0,0,.6);}
+  .arscene{position:absolute; inset:0; display:none;}
+  .arscene.on{display:block;}
+  .arscene .sky{position:absolute; inset:0;}
+  .arscene .soil{position:absolute; left:0; right:0; bottom:0; height:46px; background:linear-gradient(#5a3b22,#3a2412);}
+  .plantbig{position:absolute; font-size:120px; line-height:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));}
+  .plantmid{position:absolute; font-size:60px; line-height:1; filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));}
+  .plantsm{position:absolute; font-size:34px; line-height:1; filter:drop-shadow(0 3px 6px rgba(0,0,0,.5));}
+  .argrid{position:absolute; inset:0; background-image:linear-gradient(rgba(82,183,136,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(82,183,136,.10) 1px,transparent 1px); background-size:26px 26px;}
+  .corner{position:absolute; width:18px; height:18px; border:2px solid var(--moss);}
+  .corner.tl{top:10px; left:10px; border-right:none; border-bottom:none;}
+  .corner.tr{top:10px; right:10px; border-left:none; border-bottom:none;}
+  .corner.bl{bottom:10px; left:10px; border-right:none; border-top:none;}
+  .corner.br{bottom:10px; right:10px; border-left:none; border-top:none;}
+  .scanline{position:absolute; left:0; right:0; height:42px; pointer-events:none;
+    background:linear-gradient(rgba(82,183,136,0),rgba(82,183,136,.28),rgba(82,183,136,0));
+    animation:scan 3.4s linear infinite;}
+  @keyframes scan{0%{top:-42px;} 100%{top:240px;}}
+  .artag{position:absolute; display:flex; align-items:center; gap:6px; z-index:5;}
+  .artag .dot{width:10px; height:10px; border-radius:50%; background:var(--moss); box-shadow:0 0 0 4px rgba(82,183,136,.3); animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(82,183,136,.35);} 50%{box-shadow:0 0 0 7px rgba(82,183,136,.12);}}
+  .artag .lab{background:rgba(8,22,15,.82); border:1px solid var(--moss); border-radius:8px; padding:4px 8px; color:#eafff3; backdrop-filter:blur(3px);}
+  .artag .lab b{display:block; font-size:11px; line-height:1.2;}
+  .artag .lab i{font-style:normal; font-size:9.5px; color:var(--gold);}
+  .arbox{position:absolute; border:1.5px dashed rgba(233,196,106,.85); border-radius:8px; z-index:3;}
+  .hud-live{position:absolute; top:12px; left:12px; display:flex; gap:8px; align-items:center; z-index:8;}
+  .reclive{background:rgba(217,83,79,.92); color:#fff; font-size:10px; font-weight:800; padding:3px 8px; border-radius:6px;}
+  .camlabel{background:rgba(8,22,15,.7); color:#cdeede; font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px;}
+  .hud-meters{position:absolute; top:12px; right:12px; display:flex; gap:10px; z-index:8;}
+  .meter{display:flex; flex-direction:column; align-items:center; gap:4px;}
+  .mbar{width:10px; height:120px; background:rgba(255,255,255,.16); border-radius:6px; overflow:hidden; display:flex; align-items:flex-end;}
+  .mfill{display:block; width:100%; border-radius:6px; transition:height .4s ease;}
+  .mfill.temp{background:linear-gradient(#7ED957,#3FA34D);}
+  .mfill.hum{background:linear-gradient(#F4B860,#E08A2B);}
+  .mlabel{text-align:center;} .mlabel b{display:block; font-size:11px; color:#fff;} .mlabel span{font-size:8px; color:#bcd9cb;}
+  .envchips{display:flex; gap:8px; margin-bottom:12px;}
+  .envchip{flex:1; border-radius:12px; padding:9px 12px; display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700;}
+  .envchip.tempc{background:var(--moss-soft); color:#1c6e4a;}
+  .envchip.humc{background:var(--warn-soft); color:#9a5a12;}
+  .envchip small{display:block; font-weight:600; opacity:.8; font-size:10px;}
+
+  .tabbar{position:absolute; bottom:0; left:0; right:0; height:74px; background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px); border-top:1px solid var(--line); display:flex; z-index:45; padding-bottom:8px;}
+  .tab{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    font-size:10px; color:var(--muted); cursor:pointer; font-weight:600;}
+  .tab .t-ic{font-size:19px;}
+  .tab.active{color:var(--forest);}
+  .tabbar.hidden{display:none;}
+.tabbar{position:fixed; height:auto; min-height:64px; padding-bottom:calc(env(safe-area-inset-bottom) + 8px); padding-top:8px;}
+    html,body{margin:0; padding:0; height:100%;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background:var(--cream); color:var(--ink); overflow:hidden;}
+    .app{position:fixed; inset:0; background:var(--cream); overflow:hidden;}
+    .screens{position:absolute; inset:0;}
+    .screen{position:absolute; inset:0; display:none; overflow-y:auto; -webkit-overflow-scrolling:touch;
+      padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 90px);
+      animation:fade .25s ease;}
+    .screen.active{display:block;}
+    .screen::-webkit-scrollbar{width:0;}
+    @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+    .toast{position:fixed; bottom:calc(env(safe-area-inset-bottom) + 92px); left:50%;
+      transform:translateX(-50%) translateY(20px); background:var(--forest); color:#fff; padding:11px 18px; border-radius:12px;
+      font-size:13px; font-weight:600; opacity:0; transition:.3s; z-index:60; pointer-events:none; box-shadow:var(--shadow); max-width:80%; text-align:center;}
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  </style></head>
+<body>
+<div class="app">
+  <div class="screens"><section class="screen active" id="login">
+  <div style="text-align:center; padding-top:30px;">
+    <div style="width:70px; height:70px; border-radius:20px; background:var(--forest); color:var(--gold);
+      display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 16px;">🌿</div>
+    <h2 class="title" style="font-size:26px;">The Boaz Club</h2>
+    <p class="sub">Your Airbnb in farming</p>
+  </div>
+  <div class="card" style="margin-top:18px;">
+    <p class="muted" style="margin:0 0 4px;">Email</p>
+    <div style="border:1px solid var(--line); border-radius:11px; padding:12px; margin-bottom:12px; color:var(--ink);">john.manoah@boaz.club</div>
+    <p class="muted" style="margin:0 0 4px;">Password</p>
+    <div style="border:1px solid var(--line); border-radius:11px; padding:12px; margin-bottom:6px; color:var(--muted); letter-spacing:3px;">••••••••</div>
+    <button class="btn" onclick="go('home')">Log in</button>
+    <button class="btn ghost" onclick="go('home')" style="margin-top:10px;">Continue with Google</button>
+    <button class="btn ghost" onclick="go('home')" style="margin-top:10px;"> Continue with Apple</button>
+  </div>
+  <p style="text-align:center;"><span class="link" onclick="go('home')">New here? Join the Club →</span></p>
+</section>
+<section class="screen" id="home">
+  <div class="brandhead">
+    <div class="logo"><span class="mark">🌿</span> The Boaz Club</div>
+    <div class="row" style="gap:14px;">
+      <span class="emoji" style="cursor:pointer;" onclick="go('notifications')">🔔<sup style="color:var(--danger); font-weight:800;">3</sup></span>
+      <div class="avatar" onclick="go('profile')">JM</div>
+    </div>
+  </div>
+  <h2 class="title">Good morning, John</h2>
+  <p class="sub">Greenhouse: Chilliwack North · Plot A-14 (3×3)</p>
+  <div class="plothero">
+    <span class="pill gold" style="align-self:flex-start; margin-bottom:6px;">2 items ready to pick</span>
+    <h3>Plot A-14</h3>
+    <div class="muted2">Tomatoes, kale, basil · Healthy</div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('plotlive')">
+      <div class="emoji">📹</div><b style="display:block; margin-top:8px;">Live view</b><span class="muted">AR plot tracking</span>
+    </div>
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('plotlive')">
+      <div class="emoji">🤖</div><b style="display:block; margin-top:8px;">AI monitor</b><span class="muted">1 new insight</span>
+    </div>
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('seedlings')">
+      <div class="emoji">🌱</div><b style="display:block; margin-top:8px;">Add seedlings</b><span class="muted">Request crops</span>
+    </div>
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('key')">
+      <div class="emoji">🔑</div><b style="display:block; margin-top:8px;">Club key</b><span class="muted">Tap to unlock</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="spread"><b>Harvest calendar</b><span class="link" onclick="toast('Opening full calendar')">View all</span></div>
+    <div class="lrow" onclick="toast('Tomatoes are ready 🍅')"><span class="ico" style="background:#FBE3E2;">🍅</span>
+      <div class="meta"><b>Tomatoes</b><span>Ready now</span></div><span class="pill gold">Pick</span></div>
+    <div class="lrow"><span class="ico" style="background:var(--moss-soft);">🥬</span>
+      <div class="meta"><b>Kale</b><span>Ready now</span></div><span class="pill gold">Pick</span></div>
+    <div class="lrow"><span class="ico" style="background:#EAF6EE;">🌿</span>
+      <div class="meta"><b>Basil</b><span>In 6 days</span></div><span class="pill green">Growing</span></div>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,#fff,#f3faf5);">
+    <div class="spread"><b>🌳 Community apple tree</b><span class="pill green">Shared</span></div>
+    <p class="muted" style="margin:8px 0 10px;">Take apples from the Club tree, pay by weight. $0.40 / 100g.</p>
+    <button class="btn ghost" onclick="toast('Logged 600g of apples · $2.40')">Record what I picked</button>
+  </div>
+  <p class="hint">Prototype · tap anything to explore</p>
+</section>
+<section class="screen" id="plotlive">
+  <span class="backlink" onclick="go('home')">← My Plot</span>
+  <h2 class="title">Plot A-14 · Live</h2>
+  <p class="sub">The Boaz Club · Chilliwack North</p>
+
+  <div class="arstage">
+    <!-- Angle 0: Top -->
+    <div class="arscene on" data-a="0">
+      <div class="sky" style="background:radial-gradient(120% 90% at 50% 0%,#1f4d38,#0a1810);"></div>
+      <div class="argrid"></div>
+      <div class="plantmid" style="top:60px; left:40%;">🍅</div>
+      <div class="plantmid" style="top:120px; left:18%;">🥬</div>
+      <div class="plantmid" style="top:110px; left:64%;">🌿</div>
+      <div class="arbox" style="top:54px; left:38%; width:64px; height:64px;"></div>
+      <div class="artag" style="top:40px; left:54%;"><span class="dot"></span><div class="lab"><b>Tomato cluster</b><i>ripe 92%</i></div></div>
+      <div class="artag" style="top:150px; left:6%;"><span class="dot"></span><div class="lab"><b>Kale</b><i>healthy</i></div></div>
+      <div class="artag" style="top:96px; left:70%;"><span class="dot"></span><div class="lab"><b>Canopy 78%</b><i>coverage</i></div></div>
+    </div>
+    <!-- Angle 1: Side -->
+    <div class="arscene" data-a="1">
+      <div class="sky" style="background:linear-gradient(#23583f,#0c1c14 70%);"></div>
+      <div class="argrid"></div>
+      <div class="soil"></div>
+      <div class="plantmid" style="bottom:30px; left:20%;">🍅</div>
+      <div class="plantmid" style="bottom:30px; left:46%;">🌿</div>
+      <div class="plantmid" style="bottom:30px; left:70%;">🥬</div>
+      <div class="arbox" style="bottom:28px; left:18%; width:60px; height:90px;"></div>
+      <div class="artag" style="top:60px; left:30%;"><span class="dot"></span><div class="lab"><b>Stem strength</b><i>good</i></div></div>
+      <div class="artag" style="top:110px; left:54%;"><span class="dot"></span><div class="lab"><b>Fruit set: 14</b><i>+3 this wk</i></div></div>
+      <div class="artag" style="top:150px; left:8%;"><span class="dot"></span><div class="lab"><b>Height 41cm</b><i>+3cm / wk</i></div></div>
+    </div>
+    <!-- Angle 2: Macro -->
+    <div class="arscene" data-a="2">
+      <div class="sky" style="background:radial-gradient(80% 80% at 50% 45%,#2a5e44,#0a1810);"></div>
+      <div class="argrid"></div>
+      <div class="plantbig" style="top:55px; left:34%;">🍅</div>
+      <div class="arbox" style="top:58px; left:33%; width:120px; height:120px;"></div>
+      <div class="artag" style="top:44px; left:60%;"><span class="dot"></span><div class="lab"><b>Ripeness 92%</b><i>pick in 2 days</i></div></div>
+      <div class="artag" style="top:120px; left:8%;"><span class="dot"></span><div class="lab"><b>No blemishes</b><i>skin clear</i></div></div>
+      <div class="artag" style="top:175px; left:55%;"><span class="dot"></span><div class="lab"><b>Sugar est. high</b><i>brix model</i></div></div>
+    </div>
+    <!-- Angle 3: Wide -->
+    <div class="arscene" data-a="3">
+      <div class="sky" style="background:linear-gradient(#1d4733,#0a1810 80%);"></div>
+      <div class="argrid"></div>
+      <div class="soil"></div>
+      <div class="plantsm" style="bottom:38px; left:10%;">🍅</div>
+      <div class="plantsm" style="bottom:38px; left:30%;">🥬</div>
+      <div class="plantsm" style="bottom:38px; left:50%;">🌿</div>
+      <div class="plantsm" style="bottom:38px; left:70%;">🍅</div>
+      <div class="plantsm" style="bottom:38px; left:86%;">🥬</div>
+      <div class="artag" style="top:40px; left:8%;"><span class="dot"></span><div class="lab"><b>Plot A-14</b><i>all zones ok</i></div></div>
+      <div class="artag" style="top:150px; left:40%;"><span class="dot"></span><div class="lab"><b>Next harvest</b><i>tomatoes</i></div></div>
+    </div>
+
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="scanline"></div>
+    <div class="hud-live"><span class="reclive">● LIVE</span><span class="camlabel" id="camlabel">Cam 1 · Top</span></div>
+    <div class="hud-meters">
+      <div class="meter"><div class="mbar"><i class="mfill temp" id="tempFill" style="height:62%"></i></div><div class="mlabel"><b id="tempVal">22°</b><span>Temp</span></div></div>
+      <div class="meter"><div class="mbar"><i class="mfill hum" id="humFill" style="height:71%"></i></div><div class="mlabel"><b id="humVal">71%</b><span>Humid</span></div></div>
+    </div>
+  </div>
+
+  <div class="seg">
+    <span class="on" onclick="switchAngle(0,this)">Top</span>
+    <span onclick="switchAngle(1,this)">Side</span>
+    <span onclick="switchAngle(2,this)">Macro</span>
+    <span onclick="switchAngle(3,this)">Wide</span>
+  </div>
+
+  <div class="envchips">
+    <div class="envchip tempc">🌡️ <span><b id="tempChip">22°C</b><small>Optimal</small></span></div>
+    <div class="envchip humc">💧 <span><b id="humChip">71%</b><small id="humState">Slightly high</small></span></div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--moss);">
+    <div class="row"><span class="emoji">🤖</span><b>AI + AR insight · live</b></div>
+    <p class="muted" id="aiInsight" style="margin:10px 0 0;">Tomato cluster ripe and healthy. Canopy coverage 78%. No pests on overhead scan. Suggested action: harvest within 3 days.</p>
+    <div class="row" style="margin-top:12px; gap:8px;">
+      <button class="btn ghost" style="margin:0;" onclick="toast('Marked as done ✓')">Got it</button>
+      <button class="btn ghost" style="margin:0;" onclick="toast('A Club admin will check 👀')">Ask a human</button>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <p class="muted" style="margin:0 0 10px;">Want AR tracking automatically, 24/7?</p>
+    <button class="btn gold" onclick="go('upgrades')">Upgrade to AI Monitoring+</button>
+  </div>
+</section>
+<section class="screen" id="seedlings">
+  <span class="backlink" onclick="go('home')">← My Plot</span>
+  <h2 class="title">Request seedlings</h2>
+  <p class="sub">The Club sources, runs safety checks, and plants in your plot.</p>
+  <div class="card">
+    <div class="spread" style="margin-bottom:6px;"><b>Catalog</b><span class="muted">Plot A-14 · 4 spots left</span></div>
+    <div class="lrow" onclick="toast('Strawberries requested 🍓')"><span class="ico" style="background:#FBE3E2;">🍓</span>
+      <div class="meta"><b>Strawberries</b><span>90 days · in season</span></div><span class="pill green">Add</span></div>
+    <div class="lrow" onclick="toast('Peppers requested 🫑')"><span class="ico" style="background:#EAF6EE;">🫑</span>
+      <div class="meta"><b>Bell peppers</b><span>75 days · in season</span></div><span class="pill green">Add</span></div>
+    <div class="lrow" onclick="toast('Lettuce requested 🥬')"><span class="ico" style="background:var(--moss-soft);">🥬</span>
+      <div class="meta"><b>Butter lettuce</b><span>45 days · in season</span></div><span class="pill green">Add</span></div>
+    <div class="lrow" onclick="toast('Carrots requested 🥕')"><span class="ico" style="background:#FBEFCB;">🥕</span>
+      <div class="meta"><b>Carrots</b><span>70 days · +$2 premium</span></div><span class="pill gold">Add</span></div>
+  </div>
+  <div class="card" style="text-align:center;">
+    <p class="muted" style="margin:0 0 4px;">Can't find what you want?</p>
+    <b>Request a new crop</b>
+    <p class="muted" style="margin:6px 0 10px; font-size:12px;">We procure it, run BC regulatory checks, then plant it.</p>
+    <button class="btn ghost" onclick="toast('New crop request submitted for review')">Request a custom seedling</button>
+  </div>
+</section>
+<section class="screen" id="notifications">
+  <span class="backlink" onclick="go('home')">← Home</span>
+  <h2 class="title">Notifications</h2>
+  <p class="sub">3 new</p>
+  <div class="card" style="padding:6px 16px;">
+    <div class="lrow" onclick="go('plotlive')"><span class="ico" style="background:#FBE3E2;">🍅</span>
+      <div class="meta"><b>Tomatoes are ready to pick</b><span>Plot A-14 · 1h ago</span></div></div>
+    <div class="lrow" onclick="go('plotlive')"><span class="ico" style="background:#EAF6EE;">🤖</span>
+      <div class="meta"><b>AI: all systems healthy today</b><span>Plot A-14 · 3h ago</span></div></div>
+    <div class="lrow" onclick="go('wallet')"><span class="ico" style="background:#FBEFCB;">💰</span>
+      <div class="meta"><b>You earned 8 credits from a sale</b><span>Club Market · yesterday</span></div></div>
+    <div class="lrow" onclick="go('billing')"><span class="ico" style="background:var(--moss-soft);">💳</span>
+      <div class="meta"><b>June rent paid automatically</b><span>$36.00 · 2 days ago</span></div></div>
+  </div>
+  <button class="btn ghost" onclick="toast('Notification settings')">Manage notification preferences</button>
+</section>
+<section class="screen" id="marketplace">
+  <div class="brandhead"><div class="logo"><span class="mark">🛒</span> Club Market</div>
+    <div class="avatar" onclick="go('wallet')">💰</div></div>
+  <h2 class="title">Boaz Club Market</h2>
+  <p class="sub">Members' surplus, freshly picked near you</p>
+  <div class="seg"><span class="on" onclick="segPick(this)">All</span><span onclick="segPick(this)">Veg</span>
+    <span onclick="segPick(this)">Fruit</span><span onclick="segPick(this)">Herbs</span></div>
+  <div class="grid2">
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('listing')">
+      <div style="height:80px; border-radius:11px; background:#FBE3E2; display:flex; align-items:center; justify-content:center; font-size:34px;">🍅</div>
+      <b style="display:block; margin-top:8px;">Heirloom tomatoes</b><span class="muted">500g · $4.00</span>
+      <div class="muted" style="font-size:11px; margin-top:2px;">Maria · Chilliwack</div>
+    </div>
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('listing')">
+      <div style="height:80px; border-radius:11px; background:var(--moss-soft); display:flex; align-items:center; justify-content:center; font-size:34px;">🥬</div>
+      <b style="display:block; margin-top:8px;">Curly kale</b><span class="muted">bunch · $2.50</span>
+      <div class="muted" style="font-size:11px; margin-top:2px;">Dev · Vancouver</div>
+    </div>
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('listing')">
+      <div style="height:80px; border-radius:11px; background:#FBEFCB; display:flex; align-items:center; justify-content:center; font-size:34px;">🥕</div>
+      <b style="display:block; margin-top:8px;">Rainbow carrots</b><span class="muted">600g · $3.20</span>
+      <div class="muted" style="font-size:11px; margin-top:2px;">Aisha · Surrey</div>
+    </div>
+    <div class="card" style="margin:0; cursor:pointer;" onclick="go('listing')">
+      <div style="height:80px; border-radius:11px; background:#EAF6EE; display:flex; align-items:center; justify-content:center; font-size:34px;">🌿</div>
+      <b style="display:block; margin-top:8px;">Fresh basil</b><span class="muted">pot · $3.00</span>
+      <div class="muted" style="font-size:11px; margin-top:2px;">Liam · Abbotsford</div>
+    </div>
+  </div>
+  <button class="btn gold" onclick="toast('Create a listing for your surplus')">+ List my overstock</button>
+</section>
+<section class="screen" id="listing">
+  <span class="backlink" onclick="go('marketplace')">← Club Market</span>
+  <div style="height:160px; border-radius:16px; background:#FBE3E2; display:flex; align-items:center; justify-content:center; font-size:60px; margin-bottom:12px;">🍅</div>
+  <div class="spread"><h2 class="title" style="margin:0;">Heirloom tomatoes</h2><b class="big" style="font-size:22px;">$4.00</b></div>
+  <p class="sub">500g · picked today · Plot B-07</p>
+  <div class="card">
+    <div class="row"><div class="avatar">M</div><div><b>Maria K.</b><div class="muted">Chilliwack North · ⭐ 4.9</div></div></div>
+    <p class="muted" style="margin:12px 0 0;">Sweet, low-acid heirloom mix. Grown organically in my Club plot. Pickup at the greenhouse or local delivery.</p>
+  </div>
+  <div class="card spread"><span class="muted">Pay with</span><b>💰 Credits or 💳 Card</b></div>
+  <button class="btn" onclick="toast('Purchased! Pickup ready at greenhouse 🎉')">Buy now</button>
+  <button class="btn ghost" onclick="go('gift')" style="margin-top:10px;">Buy as a gift</button>
+</section>
+<section class="screen" id="wallet">
+  <span class="backlink" onclick="go('home')">← Home</span>
+  <h2 class="title">My credits</h2>
+  <p class="sub">Earned from selling your overstock</p>
+  <div class="card" style="background:linear-gradient(135deg,var(--forest),var(--forest2)); color:#fff; border:none;">
+    <div class="muted2" style="color:#cdeede; font-size:13px;">Available balance</div>
+    <div style="font-size:38px; font-weight:800; color:var(--gold);">142 <span style="font-size:16px; color:#fff;">credits</span></div>
+    <div class="muted2" style="color:#cdeede;">≈ $14.20 toward rent or produce</div>
+  </div>
+  <div class="grid2">
+    <button class="btn" onclick="go('billing')" style="margin:0;">Offset my rent</button>
+    <button class="btn gold" onclick="go('marketplace')" style="margin:0;">Spend in market</button>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <b>Recent activity</b>
+    <div class="lrow"><span class="ico" style="background:var(--moss-soft);">＋</span>
+      <div class="meta"><b>Sold curly kale</b><span>Yesterday</span></div><b style="color:#1c6e4a;">+8</b></div>
+    <div class="lrow"><span class="ico" style="background:var(--moss-soft);">＋</span>
+      <div class="meta"><b>Sold basil pots ×3</b><span>3 days ago</span></div><b style="color:#1c6e4a;">+9</b></div>
+    <div class="lrow"><span class="ico" style="background:#FBE3E2;">－</span>
+      <div class="meta"><b>Applied to May rent</b><span>May 1</span></div><b style="color:#a23330;">−50</b></div>
+  </div>
+</section>
+<section class="screen" id="gift">
+  <span class="backlink" onclick="go('marketplace')">← Back</span>
+  <h2 class="title">Gift your produce</h2>
+  <p class="sub">A healthier, more meaningful gift than the usual</p>
+  <div class="card">
+    <div style="height:120px; border-radius:14px; background:linear-gradient(135deg,#fdf3d6,#f6e3a6); display:flex; align-items:center; justify-content:center; font-size:50px;">🎁🍅</div>
+    <p class="muted" style="margin:12px 0 4px;">Recipient</p>
+    <div style="border:1px solid var(--line); border-radius:11px; padding:12px;">Sarah (from contacts)</div>
+    <p class="muted" style="margin:12px 0 4px;">Your message</p>
+    <div style="border:1px solid var(--line); border-radius:11px; padding:12px; color:var(--ink);">"Grown by me at the Boaz Club — enjoy! 🌿"</div>
+  </div>
+  <button class="btn" onclick="toast('Gift sent to Sarah 🎁')">Send gift</button>
+</section>
+<section class="screen" id="academy">
+  <div class="brandhead"><div class="logo"><span class="mark">🎓</span> Club Academy</div>
+    <div class="avatar" onclick="go('profile')">JM</div></div>
+  <h2 class="title">Boaz Club Academy</h2>
+  <p class="sub">Grow your knowledge, grow better crops</p>
+  <div class="card" style="background:linear-gradient(135deg,var(--moss),var(--forest)); color:#fff; border:none;">
+    <span class="pill gold">Recommended for your crops</span>
+    <h3 style="margin:10px 0 4px;">Getting the sweetest tomatoes</h3>
+    <div class="muted2" style="color:#dff3e8;">5 min read · Beginner</div>
+    <button class="btn gold" style="margin-top:12px;" onclick="toast('Opening lesson 📖')">Read now</button>
+  </div>
+  <div class="card" style="padding:6px 16px;">
+    <div class="lrow" onclick="toast('Opening lesson 📖')"><span class="ico" style="background:var(--moss-soft);">💧</span>
+      <div class="meta"><b>Watering in a greenhouse</b><span>4 min · Beginner</span></div></div>
+    <div class="lrow" onclick="toast('Opening lesson 📖')"><span class="ico" style="background:#FBEFCB;">🐞</span>
+      <div class="meta"><b>Spotting pests early</b><span>6 min · Intermediate</span></div></div>
+    <div class="lrow" onclick="toast('Opening lesson 📖')"><span class="ico" style="background:#EAF6EE;">🌱</span>
+      <div class="meta"><b>Soil science basics</b><span>8 min · Beginner</span></div></div>
+    <div class="lrow" onclick="toast('Opening lesson 📖')"><span class="ico" style="background:#FBE3E2;">🍂</span>
+      <div class="meta"><b>Composting your scraps</b><span>5 min · Beginner</span></div></div>
+  </div>
+  <div class="card spread"><div><b>Your progress</b><div class="muted">3 of 24 lessons</div></div>
+    <div style="width:90px;"><div class="bar"><i style="width:13%"></i></div></div></div>
+</section>
+<section class="screen" id="upgrades">
+  <span class="backlink" onclick="go('profile')">← Profile</span>
+  <h2 class="title">Upgrades & services</h2>
+  <p class="sub">Add what you need, billed with your rent</p>
+  <div class="card spread"><div class="row"><span class="emoji">🤖</span><div><b>AI Monitoring+</b><div class="muted">24/7 AR health & pest alerts</div></div></div>
+    <div style="text-align:right;"><b>$6/mo</b><br><button class="btn gold" style="padding:7px 14px; width:auto; margin-top:6px;" onclick="toast('AI Monitoring+ added ✓')">Add</button></div></div>
+  <div class="card spread"><div class="row"><span class="emoji">📹</span><div><b>Live video stream</b><div class="muted">Multi-angle, always on</div></div></div>
+    <div style="text-align:right;"><b>$4/mo</b><br><button class="btn gold" style="padding:7px 14px; width:auto; margin-top:6px;" onclick="toast('Live video added ✓')">Add</button></div></div>
+  <div class="card spread"><div class="row"><span class="emoji">🧑‍🌾</span><div><b>Tend my plot</b><div class="muted">We maintain it for you</div></div></div>
+    <div style="text-align:right;"><b>$18/mo</b><br><button class="btn gold" style="padding:7px 14px; width:auto; margin-top:6px;" onclick="toast('Tending service added ✓')">Add</button></div></div>
+  <div class="card spread"><div class="row"><span class="emoji">🚚</span><div><b>Produce delivery</b><div class="muted">Weekly to your door</div></div></div>
+    <div style="text-align:right;"><b>$9/mo</b><br><button class="btn gold" style="padding:7px 14px; width:auto; margin-top:6px;" onclick="toast('Delivery added ✓')">Add</button></div></div>
+</section>
+<section class="screen" id="key">
+  <span class="backlink" onclick="go('home')">← My Plot</span>
+  <h2 class="title">Club key</h2>
+  <p class="sub">Your phone is your key — no card needed</p>
+  <div class="card" style="text-align:center; padding:30px 16px;">
+    <div class="keycircle" style="width:120px; height:120px; border-radius:50%; background:var(--moss-soft); display:flex; align-items:center; justify-content:center; font-size:54px; margin:0 auto 16px; cursor:pointer;" onclick="unlock(this)">🔓</div>
+    <b style="font-size:18px;">Chilliwack North</b>
+    <p class="muted" style="margin:6px 0 16px;">Gate 2 · Access valid (plot active)</p>
+    <button class="btn" onclick="unlock(document.querySelector('.keycircle'))">Hold to unlock</button>
+  </div>
+  <div class="card" style="padding:6px 16px;">
+    <div class="lrow"><span class="ico" style="background:var(--moss-soft);">✓</span>
+      <div class="meta"><b>Entered Gate 2</b><span>Today · 8:32am</span></div></div>
+    <div class="lrow"><span class="ico" style="background:var(--moss-soft);">✓</span>
+      <div class="meta"><b>Entered Gate 2</b><span>Mon · 6:10pm</span></div></div>
+  </div>
+</section>
+<section class="screen" id="billing">
+  <span class="backlink" onclick="go('profile')">← Profile</span>
+  <h2 class="title">Payments & billing</h2>
+  <p class="sub">Autopay keeps your plot yours</p>
+  <div class="card spread"><div><b>Autopay</b><div class="muted">Rent + add-ons on the 1st</div></div>
+    <div style="width:46px; height:28px; background:var(--moss); border-radius:99px; position:relative;"><span style="position:absolute; right:3px; top:3px; width:22px; height:22px; background:#fff; border-radius:50%;"></span></div></div>
+  <div class="card">
+    <b>This month</b>
+    <div class="spread" style="margin-top:10px;"><span class="muted">Plot rent (3×3)</span><b>$36.00</b></div>
+    <div class="spread" style="margin-top:6px;"><span class="muted">AI Monitoring+</span><b>$6.00</b></div>
+    <div class="spread" style="margin-top:6px;"><span class="muted">Credits applied</span><b style="color:#1c6e4a;">−$14.20</b></div>
+    <hr style="border:none; border-top:1px solid var(--line); margin:10px 0;">
+    <div class="spread"><b>Total due July 1</b><b class="big" style="font-size:20px;">$27.80</b></div>
+  </div>
+  <div class="card spread"><div class="row"><span class="emoji">💳</span><div><b>Visa •••• 4242</b><div class="muted">Default</div></div></div><span class="link" onclick="toast('Manage cards')">Change</span></div>
+  <button class="btn ghost" onclick="toast('Receipt downloaded')">Download receipts</button>
+</section>
+<section class="screen" id="profile">
+  <div class="brandhead"><div class="logo"><span class="mark">🌿</span> The Boaz Club</div></div>
+  <div style="text-align:center; margin-bottom:16px;">
+    <div class="avatar" style="width:74px; height:74px; font-size:26px; margin:0 auto 10px;">JM</div>
+    <h2 class="title" style="margin:0;">John Manoah</h2>
+    <p class="sub" style="margin:2px 0 0;">Club member since 2026 · Plot A-14</p>
+  </div>
+  <div class="card" style="padding:6px 16px;">
+    <div class="lrow" onclick="go('wallet')"><span class="ico" style="background:#FBEFCB;">💰</span><div class="meta"><b>My credits</b><span>142 available</span></div><span>›</span></div>
+    <div class="lrow" onclick="go('upgrades')"><span class="ico" style="background:var(--moss-soft);">⭐</span><div class="meta"><b>Upgrades & services</b><span>1 active</span></div><span>›</span></div>
+    <div class="lrow" onclick="go('billing')"><span class="ico" style="background:#EAF6EE;">💳</span><div class="meta"><b>Payments & billing</b><span>Autopay on</span></div><span>›</span></div>
+    <div class="lrow" onclick="go('key')"><span class="ico" style="background:#FBE3E2;">🔑</span><div class="meta"><b>Club access</b><span>Phone key active</span></div><span>›</span></div>
+    <div class="lrow" onclick="toast('Editing profile')"><span class="ico" style="background:#eef4f0;">✏️</span><div class="meta"><b>Edit profile</b><span>Name, photo, address</span></div><span>›</span></div>
+  </div>
+  <button class="btn ghost" onclick="go('login')">Log out</button>
+</section></div>
+  <div class="tabbar" id="tabbar"><div class="tab active" data-tab="home" onclick="go('home')"><span class="t-ic">🏠</span>Home</div><div class="tab" data-tab="plotlive" onclick="go('plotlive')"><span class="t-ic">🌱</span>Plot</div><div class="tab" data-tab="marketplace" onclick="go('marketplace')"><span class="t-ic">🛒</span>Market</div><div class="tab" data-tab="academy" onclick="go('academy')"><span class="t-ic">🎓</span>Academy</div><div class="tab" data-tab="profile" onclick="go('profile')"><span class="t-ic">👤</span>Profile</div></div>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+  function go(id){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.classList.add('active'); el.scrollTop = 0;
+    document.querySelectorAll('.tab').forEach(function(t){
+      t.classList.toggle('active', t.getAttribute('data-tab')===id);
+    });
+    var tb = document.getElementById('tabbar');
+    if(tb){ var hide = (id==='login' || id==='gha' || id==='gho'); tb.classList.toggle('hidden', hide); }
+  }
+  function setRole(role){
+    document.querySelectorAll('.rolebtn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-role')===role); });
+    if(role==='member'){ go('home'); } else if(role==='gha'){ go('gha'); } else if(role==='gho'){ go('gho'); }
+  }
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast'); if(!t) return;
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1900);
+  }
+  function segPick(el){
+    var sibs = el.parentNode.children;
+    for(var i=0;i<sibs.length;i++){ sibs[i].classList.remove('on'); }
+    el.classList.add('on');
+  }
+  function unlock(circle){
+    if(!circle) return; circle.textContent = '🔒'; toast('Unlocked — welcome in 🌿');
+    setTimeout(function(){ circle.textContent = '🔓'; }, 1800);
+  }
+  function switchGH(){
+    var names = ['Chilliwack North','Vancouver East','Surrey Central','All greenhouses'];
+    var revs = ['$8,420','$6,910','$5,330','$20,660'];
+    var cur = document.getElementById('ghName').textContent;
+    var idx = (names.indexOf(cur)+1) % names.length;
+    document.getElementById('ghName').textContent = names[idx];
+    document.getElementById('ghRev').textContent = revs[idx];
+    toast('Switched to ' + names[idx]);
+  }
+  var ANGLES = [
+    {cam:'Cam 1 · Top',  temp:22, tf:62, hum:71, hf:71, hs:'Slightly high', ai:'Tomato cluster ripe and healthy. Canopy coverage 78%. No pests on overhead scan. Suggested action: harvest within 3 days.'},
+    {cam:'Cam 2 · Side', temp:22, tf:62, hum:70, hf:70, hs:'Slightly high', ai:'Strong stems and 14 fruit set, growth +3cm this week. Side scan clear of disease.'},
+    {cam:'Cam 3 · Macro',temp:23, tf:68, hum:73, hf:73, hs:'Slightly high', ai:'Close-up ripeness 92 percent, no blemishes detected. Best picked within 2 days.'},
+    {cam:'Cam 4 · Wide', temp:21, tf:58, hum:70, hf:70, hs:'Slightly high', ai:'Whole-plot scan nominal across all zones. Next harvest: tomatoes.'}
+  ];
+  function switchAngle(n, el){
+    document.querySelectorAll('.arscene').forEach(function(s){ s.classList.toggle('on', s.getAttribute('data-a')==String(n)); });
+    if(el){ var sibs=el.parentNode.children; for(var i=0;i<sibs.length;i++){ sibs[i].classList.remove('on'); } el.classList.add('on'); }
+    var a = ANGLES[n];
+    var set=function(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; };
+    var fill=function(id,v){ var e=document.getElementById(id); if(e) e.style.height=v+'%'; };
+    set('camlabel', a.cam);
+    set('tempVal', a.temp+'°'); set('tempChip', a.temp+'°C');
+    set('humVal', a.hum+'%'); set('humChip', a.hum+'%'); set('humState', a.hs);
+    fill('tempFill', a.tf); fill('humFill', a.hf);
+    set('aiInsight', a.ai);
+  }
+
+  // start on first screen
+  go('login');
+</script>
+</body></html>
